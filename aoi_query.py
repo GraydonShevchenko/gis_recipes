@@ -48,10 +48,10 @@ if os.path.exists(resultant_path + "\\" + work_gdb):
     else:
         print("Either rename the variables temp_out_path or temp_out_gdb or delete the existing temporary geodatabase")
 
-user = 'alu'
+user = ''
 # str(input("Enter your username:\n"))
 # print("Connecting to {} as user {}".format(instance,user)) 
-passwd = 'info1234!'
+passwd = ''
 #str(input("Enter your password:\n"))
 
 if os.path.exists(input_database_fullpath):
