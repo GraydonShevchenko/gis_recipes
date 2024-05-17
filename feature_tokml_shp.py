@@ -2,11 +2,11 @@ import arcpy
 import os 
 
 #add your geodatabase path here
-arcpy.env.workspace=r"Z:\GIS\1_Request\Lands\PowellLakeFloatHomes\PowellLake_FloatHome\PowellLake_FloatHome.gdb"
+arcpy.env.workspace=r" "
 arcpy.env.overwriteOutput=True
 
 #add output folder path here
-output_folder = r"\\sfp.idir.bcgov\s164\S63097\Share\GIS\1_Request\Lands\PowellLakeFloatHomes\3_export_data"
+output_folder = r" "
 #let's check what's in the database
 fc = arcpy.ListFeatureClasses() 
 #for loop to loop through the database
