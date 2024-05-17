@@ -61,11 +61,30 @@ arcpy.AddMessage(arcpy.GetMessages())
 arcpy.env.overwriteOutput=True
 arcpy.env.workspace = work_gdb
 
+<<<<<<< HEAD
 #ask user to enter Oracle credential
 user = str(input("Enter your username:\n"))
 print("Connecting to {} as user {}".format(instance,user)) 
 passwd = str(input("Enter your password:\n"))
 print('password entered')
+=======
+# Check file status
+if not os.path.exists(resultant_path):
+    arcpy.management.CreateFileGDB(resultant_path, work_gdb)
+
+if os.path.exists(resultant_path + "\\" + work_gdb):
+    delete_temp_gdb = input("Temporary geodatabase: {}\n\nThe temporary geodatabase already exists. Delete? y/n".format(work_gdb))
+    if delete_temp_gdb.lower() == "y":
+        shutil.rmtree(resultant_path + "\\" + work_gdb)
+    else:
+        print("Either rename the variables temp_out_path or temp_out_gdb or delete the existing temporary geodatabase")
+
+user = ''
+# str(input("Enter your username:\n"))
+# print("Connecting to {} as user {}".format(instance,user)) 
+passwd = ''
+#str(input("Enter your password:\n"))
+>>>>>>> d6abc93a34199bfa81979e4004d021e3d4a7b52b
 
 if os.path.exists(input_database_fullpath):
     delete_connection = input("The database connection {} already exists. Delete? y/n".format(input_database))
