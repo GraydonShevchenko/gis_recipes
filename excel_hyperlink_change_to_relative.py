@@ -63,36 +63,47 @@ mpr.WNetGetConnectionW.argtypes = (wintypes.LPCWSTR,
 xl_param = sys.argv[1]
 lst_xl = xl_param.split(';')
 
+# Loop through all Excel files in list
 for xl in lst_xl:
+
+    # Get the full unc path if its a named drive
     xl = get_full_path(str_file=xl)
     xl_head = os.path.dirname(xl)
 
-    #adding workbook
+    # Open the workbook
     print(f'Opening workbook: {xl}')
     wb = openpyxl.load_workbook(filename=xl)
-    #pointing to the worksheet script is working on
+    
+    # Loop through the sheets within the workbook
     for sheet in wb.worksheets:
 
         # iterate through all cells containing hyperlinks
         for row in sheet.iter_rows():
             for cell in row:
+                # Check if the cell is hyperlinked
                 if cell.hyperlink:
-                    target = cell.hyperlink.target.replace('file:///','')
+                    # Remove the built-in file prefix
+                    target = get_full_path(cell.hyperlink.target.replace('file:///',''))
+
+                    # If the hyperlink is to a website, ignore and continue to the next item
                     if target.startswith('https://'):
                         continue
-                    #only want the diractory path 
+
+                    # Extract the parts of the hyperlink 
                     target_head = os.path.dirname(target)
                     target_file = os.path.basename(target)
+
+                    # Find the common directories and return the relative path
                     try:
                         rel_head = os.path.relpath(target_head, xl_head)
                     except:
                         rel_head = target_head
 
+                    # Set the new target hyperlink ot the cell
                     new_target = os.path.join(rel_head, target_file)
                     cell.hyperlink.target = new_target
                     print(f'Replaced {target} with {new_target}')
 
-    #save a new workbook for version control
     print('Saving workbook')
     wb.save(xl)
 
